@@ -25,11 +25,24 @@ export default class Calculator extends Component{
     }
 
     setOperation(op){
-        console.log(op)
+        if(this.state.current === 0){
+            this.setState({op, current: 1, clearDisplay: true})
+        }else{
+            const equals = op === '='
+            const currentOperation = this.state.op
+            const values = [...this.state.values]
+            try{
+                values[0] = eval(`${values[0]} ${currentOperation} ${values[1]}`)
+            }catch(e){
+                values[0] = this.state.values[0]
+            }
+            values[1] = 0
+            this.setState({displayValue: values[0], operation: equals ? null : op, clearDisplay: !equals, values})
+        }
     }
 
     addDigit(n){
-        if(n === ',' && this.state.displayValue.includes(',')){
+        if(n === '.' && this.state.displayValue.includes('.')){
             return
         }
 
@@ -38,7 +51,7 @@ export default class Calculator extends Component{
         const displayValue = currentValue + n
         this.setState({displayValue, clearDisplay: false})
 
-        if(n !== ','){
+        if(n !== '.'){
             const i = this.state.current
             const newValue = parseFloat(displayValue)
             const values = [...this.state.values]
@@ -67,7 +80,7 @@ export default class Calculator extends Component{
                 <Button label="3" click={this.addDigit}/>
                 <Button label="+" click={this.setOperation} operation/>
                 <Button label="0" click={this.addDigit} double/>
-                <Button label="," click={this.addDigit}/>
+                <Button label="." click={this.addDigit}/>
                 <Button label="=" click={this.setOperation} operation/>
             </div>
         )
