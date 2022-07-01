@@ -11,3 +11,32 @@
     border-bottom: var(--border-button);
     outline: none;
 }
+
+.button:hover{
+    background-color: #e4e4e4;
+}
+
+.button:active{
+    background-color: #ccc;
+}
+
+.button.double{
+    grid-column: span 2;
+}
+
+.button.triple{
+    grid-column: span 3;
+}
+
+.button.operation{
+    background-color: #fa8231;
+    color: #ffffff;
+}
+
+.button.operation:hover{
+    background-color: #ff9b58cc;
+}
+
+.button.operation:active{
+    background-color: #fa8231cc;
+}
